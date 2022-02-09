@@ -41,3 +41,6 @@ void Segment::SetPOS_X(int pos_x_){
 void Segment::SetPOS_Y(int pos_y_){
     this->pos_y = pos_y_;
 }
+void Segment::SetNext(Segment* next){
+    this->next = next;
+}

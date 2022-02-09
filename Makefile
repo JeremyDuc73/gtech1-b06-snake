@@ -1,11 +1,24 @@
-uml/classes_jeremy.png: jeremy/*.hpp
-	./uml/mk_uml.sh uml/classes_jeremy.png jeremy/*.hpp
+CC=g++
+# Adapt the variables below to your needs:
+EXE=snake
+CPP=game/*.cpp
+HPP=game/direction.h  game/*.hpp
 
-uml/classes_aleksi.png: aleksi/*.hpp
-	./uml/mk_uml.sh uml/classes_aleksi.png aleksi/*.hpp
+# The default is build the executable file:
+default: $(EXE)
 
-uml/classes_test.png: test/*.hpp
-	./uml/mk_uml.sh uml/classes_test.png test/*.hpp
+# The executable file must be rebuilt if source files changed:
+$(EXE): $(CPP) $(HPP)
+	$(CC) $(CPP) -lSDL2 -o $(EXE)
 
+# Run of the (always up-to-date) executable:
+run: $(EXE)
+	./$(EXE)
+
+# Build the UML diagram as a PNG image:
+uml/classes.png: $(HPP)
+	./uml/mk_uml.sh uml/classes.png game/*.hpp
+
+# Count the number of lines of code:
 nblines:
-	@wc -l *.h *.[ch]pp
+	@wc -l $(CPP) $(HPP)

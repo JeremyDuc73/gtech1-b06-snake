@@ -10,5 +10,7 @@ class Application {
     public:
         Application();
         ~Application();
+        void draw_fruit();
+        void draw_snake();
 
 };

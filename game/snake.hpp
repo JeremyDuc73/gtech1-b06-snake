@@ -7,10 +7,10 @@ class Snake {
     public:
         Snake(int pos_x, int pos_y, int dir);
         ~Snake();
-        Segment GetHead();
+        Segment * GetHead();
         int Collide();
         void Keyboard();
         void Move();
         void Eat();
-
+        
 };

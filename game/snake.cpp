@@ -6,26 +6,28 @@
 using namespace std;
 
 Snake::Snake(int pos_x, int pos_y, int dir){
-    Segment *newSegment =  new Segment(pos_x, pos_y, dir);
+    this->head=  new Segment(pos_x, pos_y, dir);
 }
 
 Snake::~Snake(){
 }
 
 int Snake::Collide(){
-    Segment head_tpm= GetHead();
-    Segment * browsesnake = this->head;
-    while(browsesnake->GetNext()!= NULL){
-        if (this->head->GetPOS_X() == browsesnake->GetNext()->GetPOS_X() && this->head->GetPOS_Y() ==  browsesnake->GetNext()->GetPOS_Y()){
+    Segment * head_tpm= GetHead();
+    Segment * browsesnake = GetHead();
+    while(browsesnake->GetNext() != NULL){
+
+        if (head_tpm->GetPOS_X() == browsesnake->GetNext()->GetPOS_X() && head_tpm->GetPOS_Y() == browsesnake->GetNext()->GetPOS_Y()){
             return 1;
+            break;
         }
         browsesnake = browsesnake->GetNext();
     }
     return 0;
 }
 
-Segment Snake::GetHead(){
-    return *head;
+Segment * Snake::GetHead(){
+    return this->head;
 }
 
 int keyboard(int dir) {
@@ -55,19 +57,19 @@ void Snake::Eat(){
     int lastdir = browsesnake->GetDir();
     switch(lastdir){
         case UP:
-        lastposy += 1;
+        lastposy += 20;
         break;
 
         case DOWN:
-        lastposy -= 1;
+        lastposy -= 20;
         break;
 
         case LEFT:
-        lastposx += 1;
+        lastposx += 20;
         break;
 
         case RIGHT:
-        lastposx -=1;
+        lastposx -=20;
         break;
     } 
     Segment * last_segment = new Segment(lastposx,lastposy,lastdir);
@@ -86,34 +88,28 @@ void Snake::Move(){
     }
     switch(new_dir){
         case UP:
-        pos_y -= 1;
+        pos_y -= 20;
         break;
 
         case DOWN:
-        pos_y += 1;
+        pos_y += 20;
         break;
 
         case LEFT:
-        pos_x -= 1;
+        pos_x -= 20;
         break;
 
         case RIGHT:
-        pos_x +=1;
+        pos_x +=20;
         break;
     }
-
+    
     this->head = new Segment(pos_x, pos_y, new_dir); 
-    if (old_head->next == NULL) delete old_head;
-    else head->next = old_head;
+    this->head->SetNext(old_head);
 
     Segment * cur_head = this->head;
-    while(cur_head->next != NULL) {
-        cur_head = cur_head->next;
+    while(cur_head->GetNext()->GetNext() != NULL) {
+        cur_head = cur_head->GetNext();
     }
-    delete cur_head; 
+    cur_head->SetNext(NULL);
 }
-
-int main(){
-    return 0;
-}
-

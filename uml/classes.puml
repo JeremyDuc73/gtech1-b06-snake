@@ -12,6 +12,8 @@ class Application {
 	-win : MainSDLWindow*
 	-pg : Playground*
 	-frame_rate_ms : Uint32
+	+draw_fruit() : void
+	+draw_snake() : void
 }
 
 
@@ -21,22 +23,27 @@ class MainSDLWindow {
 	+GetRenderer() : SDL_Renderer*
 	-renderer : SDL_Renderer*
 	-window : SDL_Window*
-	+Init(const char* winname, int width, int height) : int
+	+Init(const char* name, int largeur, int hauteur) : int
+	+clean() : void
 }
 
 
 class Playground {
 	+Playground(int nbrow, int nbcol)
 	+~Playground()
+	-fruit : Segment*
 	+GetSnake() : Snake*
-	-snake : Snake*
+	-litsnake : Snake*
 	+Collide() : int
 	+GetScore() : int
-	+MeetFruit() : int
-	+Next(int dir) : int
+	+fruit_pos_x : int
+	+fruit_pos_y : int
 	-nbcol : int
 	-nbrow : int
+	-score : int
+	+verif_MeetFruit() : int
 	+GenerateFruit() : void
+	+MeetFruit() : void
 	+init(int dir) : void
 }
 
@@ -44,24 +51,31 @@ class Playground {
 class Segment {
 	+Segment(int pos_x, int pos_y, int dir)
 	+~Segment()
-	-next : Segment*
-	+GetDIR() : int
+	+GetNext() : Segment*
+	+next : Segment*
+	+GetDir() : int
 	+GetPOS_X() : int
 	+GetPOS_Y() : int
 	-dir : int
 	-pos_x : int
 	-pos_y : int
+	+SetDir(int dir) : void
+	+SetNext(Segment* next) : void
+	+SetPOS_X(int pos_x) : void
+	+SetPOS_Y(int pos_y) : void
 }
 
 
 class Snake {
-	+Snake()
+	+Snake(int pos_x, int pos_y, int dir)
 	+~Snake()
 	+GetHead() : Segment*
 	-head : Segment*
 	-tail : Segment*
 	+Collide() : int
-	-dir_prev : int
+	+Eat() : void
+	+Keyboard() : void
+	+Move() : void
 }
 
 
@@ -79,6 +93,9 @@ class Snake {
 
 
 .Application o-- .Playground
+
+
+.Playground o-- .Segment
 
 
 .Playground o-- .Snake

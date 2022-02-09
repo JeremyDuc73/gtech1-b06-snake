@@ -8,12 +8,11 @@ using namespace std;
 #include <stdlib.h>
 
 MainSDLWindow::MainSDLWindow(void){
-    window = NULL;
-    renderer = NULL;
+    this->window = NULL;
+    this->renderer = NULL;
 }
 
 MainSDLWindow::~MainSDLWindow(void){
-
 }
 
 int MainSDLWindow::Init(const char *name, int largeur,int hauteur){
@@ -25,21 +24,16 @@ int MainSDLWindow::Init(const char *name, int largeur,int hauteur){
     }
 
     this->window = SDL_CreateWindow( name , SDL_WINDOWPOS_CENTERED , SDL_WINDOWPOS_CENTERED , largeur,hauteur, SDL_WindowFlags());
-    if (window == NULL) {
+    if (this->window == NULL) {
         cout << "Error: SDL-CreateWindow() failed";
         return EXIT_FAILURE;
     }
 
-    this->renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (renderer == NULL) {
+    this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
+    if (this->renderer == NULL) {
         cout << "Error: SDL-CreateRenderer() failed";
         return EXIT_FAILURE;
     }
-
-
-    SDL_SetRenderDrawColor(renderer,0,0,0, SDL_ALPHA_OPAQUE);
-
-    
     
     return EXIT_SUCCESS;
 }
@@ -48,7 +42,13 @@ SDL_Renderer * MainSDLWindow::GetRenderer(void){
     return this->renderer;
 }
 
-// int main(void) {
-//     MainSDLWindow main_window;
-//     main_window.Init("salut", 200,200);
+void MainSDLWindow::clean(){
+    SDL_DestroyRenderer(this->renderer);
+    SDL_DestroyWindow(this->window);
+    SDL_Quit();
+}
+
+// void MainSDLWindow::draw_frui(int-x_pos,int y_pos){
+    
+
 // }
