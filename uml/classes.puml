@@ -44,7 +44,6 @@ class Playground {
 	+verif_MeetFruit() : int
 	+GenerateFruit() : void
 	+MeetFruit() : void
-	+init(int dir) : void
 }
 
 
