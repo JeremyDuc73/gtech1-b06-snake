@@ -16,7 +16,7 @@ Application::Application(){
 
     this->win = new MainSDLWindow();
     this->win -> Init("SNAKE",Size_w,Size_h);
-    this->pg = new Playground(Size_w,Size_h);
+    this->pg = new Playground(Size_h,Size_w);
     this->frame_rate_ms = frame_rate;
     this->pg->GenerateFruit();
     draw_fruit();
