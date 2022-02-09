@@ -13,8 +13,10 @@ Snake::~Snake(){
 }
 
 int Snake::Collide(){
+
     Segment * head_tpm= GetHead();
     Segment * browsesnake = GetHead();
+
     while(browsesnake->GetNext() != NULL){
 
         if (head_tpm->GetPOS_X() == browsesnake->GetNext()->GetPOS_X() && head_tpm->GetPOS_Y() == browsesnake->GetNext()->GetPOS_Y()){
@@ -31,7 +33,9 @@ Segment * Snake::GetHead(){
 }
 
 int keyboard(int dir) {
+
     const Uint8 *keystates = SDL_GetKeyboardState(NULL);
+
     if (keystates[SDL_SCANCODE_UP]) {
         dir = UP;
         }
@@ -48,30 +52,35 @@ int keyboard(int dir) {
 }
 
 void Snake::Eat(){
+
     Segment * browsesnake = this->head;
+
     while (browsesnake->next != NULL){
         browsesnake = browsesnake->next;
     }
+
     int lastposx = browsesnake->GetPOS_X();
     int lastposy = browsesnake->GetPOS_Y();
     int lastdir = browsesnake->GetDir();
+
     switch(lastdir){
         case UP:
-        lastposy += 20;
+        lastposy += PAS;
         break;
 
         case DOWN:
-        lastposy -= 20;
+        lastposy -= PAS;
         break;
 
         case LEFT:
-        lastposx += 20;
+        lastposx += PAS;
         break;
 
         case RIGHT:
-        lastposx -=20;
+        lastposx -=PAS;
         break;
     } 
+
     Segment * last_segment = new Segment(lastposx,lastposy,lastdir);
     browsesnake->next = last_segment;
 }
@@ -83,24 +92,28 @@ void Snake::Move(){
     pos_x = old_head->GetPOS_X();
     pos_y = old_head->GetPOS_Y();
     int new_dir = keyboard(this->head->GetDir());
+    
     if(new_dir != - this->head->GetDir()){
         this->head->SetDir(new_dir);
+    }else{
+        new_dir = this->head->GetDir();
     }
+
     switch(new_dir){
         case UP:
-        pos_y -= 20;
+        pos_y -= PAS;
         break;
 
         case DOWN:
-        pos_y += 20;
+        pos_y += PAS;
         break;
 
         case LEFT:
-        pos_x -= 20;
+        pos_x -= PAS;
         break;
 
         case RIGHT:
-        pos_x +=20;
+        pos_x +=PAS;
         break;
     }
     

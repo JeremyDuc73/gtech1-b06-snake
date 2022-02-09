@@ -17,8 +17,7 @@ class Playground {
         int GetScore();
         void MeetFruit();
         void GenerateFruit();
-        void init(int dir);
-        int fruit_pos_x = 25;
-        int fruit_pos_y = 0;
+        int fruit_pos_x;
+        int fruit_pos_y;
         int verif_MeetFruit();
 };
